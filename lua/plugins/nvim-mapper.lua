@@ -1,0 +1,1 @@
+return { 'gregorias/nvim-mapper' }
