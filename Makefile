@@ -15,7 +15,7 @@ build:
 dev:
 	$(DOCKER) run --rm \
 		-v $$PWD:/home/nvim/.config/nvim \
-		-v $$EXTRA:$$EXTRA \
+		$$EXTRA \
 		-ti $(IMAGE):$(TAG) \
 		${TARGET}
 
@@ -23,7 +23,7 @@ dev:
 dbg:
 	$(DOCKER) run --rm \
 		-v $$PWD:/home/vim/.vim \
-		-v $$EXTRA:$$EXTRA \
+		$$EXTRA \
 		-e DEBUG=1 \
 		--entrypoint /usr/bin/zsh \
 		-ti $(IMAGE):$(TAG) \
