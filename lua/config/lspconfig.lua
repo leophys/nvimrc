@@ -84,3 +84,5 @@ vim.keymap.set(
 
 -- Format on save
 vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+
+return servers
