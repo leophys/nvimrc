@@ -1,3 +1,3 @@
-local theme = require("themes.cyberdream")
+local theme = require("themes.rosepine")
 
 return theme
