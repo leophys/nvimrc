@@ -15,12 +15,12 @@ local opts = { noremap = true, silent = true }
 
 local keymaps = {
     -- Movement: text
-    { mode = 'n', keys = '<C-Down>',      cmd = ':m .+1<CR>==',                                      options = opts,               category = 'Movement',        unique_identifier = 'line_move_down_n',           description = 'Move line down (normal mode)' },
-    { mode = 'n', keys = '<C-Up>',        cmd = ':m .-2<CR>==',                                      options = opts,               category = 'Movement',        unique_identifier = 'line_move_up_n',             description = 'Move line up (normal mode)' },
+    { mode = 'n', keys = '<C-Down>',      cmd = '<cmd>m .+1<CR>==',                                  options = opts,               category = 'Movement',        unique_identifier = 'line_move_down_n',           description = 'Move line down (normal mode)' },
+    { mode = 'n', keys = '<C-Up>',        cmd = '<cmd>m .-2<CR>==',                                  options = opts,               category = 'Movement',        unique_identifier = 'line_move_up_n',             description = 'Move line up (normal mode)' },
     { mode = 'i', keys = '<C-Down>',      cmd = '<Esc>:m .+1<CR>==gi',                               options = opts,               category = 'Movement',        unique_identifier = 'line_move_down_i',           description = 'Move line down (inser mode)' },
     { mode = 'i', keys = '<C-Up>',        cmd = '<Esc>:m .-2<CR>==gi',                               options = opts,               category = 'Movement',        unique_identifier = 'line_move_up_i',             description = 'Move line up (insert mode)' },
-    { mode = 'n', keys = '<C-Down>',      cmd = ":m '>+1<CR>gv=gv",                                  options = opts,               category = 'Movement',        unique_identifier = 'line_move_down_v',           description = 'Move line down (visual mode)' },
-    { mode = 'n', keys = '<C-Up>',        cmd = ":m '<-2<CR>gv=gv",                                  options = opts,               category = 'Movement',        unique_identifier = 'line_move_up_v',             description = 'Move line up (visual mode)' },
+    { mode = 'v', keys = '<C-Down>',      cmd = ":m '>+1<CR>gv=gv",                                  options = opts,               category = 'Movement',        unique_identifier = 'line_move_down_v',           description = 'Move line down (visual mode)' },
+    { mode = 'v', keys = '<C-Up>',        cmd = ":m '<-2<CR>gv=gv",                                  options = opts,               category = 'Movement',        unique_identifier = 'line_move_up_v',             description = 'Move line up (visual mode)' },
     -- Movement: splits
     { mode = 'n', keys = '<C-l>',         cmd = '<C-w>l',                                            options = opts,               category = "Movement",        unique_identifier = "pane_move_right_n",          description = "Move to the split to the right" },
     { mode = 'v', keys = '<C-l>',         cmd = '<C-w>l',                                            options = opts,               category = "Movement",        unique_identifier = "pane_move_right_v",          description = "Move to the split to the right" },
