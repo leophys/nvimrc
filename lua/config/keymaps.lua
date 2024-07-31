@@ -61,8 +61,8 @@ local keymaps = {
     -- Undo tree
     { mode = 'n', keys = '<Leader>u',     cmd = '<cmd>UndotreeToggle<cr><cmd>UndotreeFocus<cr>',     options = { noremap = true }, category = "UndoTree",        unique_identifier = "undo_tree_toggle",           description = "Toggle UndoTree browser" },
     -- Split maximizer
-    { mode = 'n', keys = '<Leader>mm',    cmd = '<cmd>MaximizerToggle<cr>',                          options = opts,               category = "MaximizerToggle", unique_identifier = "maximizer_toggle_n",         description = "Toggle maximal view of current split" },
-    { mode = 'v', keys = '<Leader>mm',    cmd = '<cmd>MaximizerToggle<cr>',                          options = opts,               category = "MaximizerToggle", unique_identifier = "maximizer_toggle_v",         description = "Toggle maximal view of current split" },
+    { mode = 'n', keys = '<Leader>mm',    cmd = '<cmd>Maximize<cr>',                                 options = opts,               category = "MaximizerToggle", unique_identifier = "maximizer_toggle_n",         description = "Toggle maximal view of current split" },
+    { mode = 'v', keys = '<Leader>mm',    cmd = '<cmd>Maximize<cr>',                                 options = opts,               category = "MaximizerToggle", unique_identifier = "maximizer_toggle_v",         description = "Toggle maximal view of current split" },
     -- Search niceties
     { mode = 'v', keys = '<Leader>/',     cmd = '<esc>:\\%V',                                        options = {},                 category = "Search",          unique_identifier = "search_in_visual_selection", description = "Search only in the current visual selection" },
 }
