@@ -66,6 +66,8 @@ local keymaps = {
     -- Search niceties
     { mode = 'v', keys = '<Leader>/',     cmd = '<esc>:\\%V',                                        options = {},                 category = "Search",          unique_identifier = "search_in_visual_selection", description = "Search only in the current visual selection" },
     { mode = 'n', keys = '<Leader><esc>', cmd = ':silent! nohls<CR>:call clearmatches()<CR>',        options = opts,               category = "Search",          unique_identifier = "clean_selection",            description = "Clean the selection and remove highlight of the last matches" },
+    -- Git
+    { mode = 'n', keys = '<Leader>b',     cmd = '<cmd>BlameToggle<cr>',                              options = opts,               category = "Git",             unique_identifier = "git_blame",                  description = "Show git blame info on the side" },
 }
 
 for _i, keymap in ipairs(keymaps) do
