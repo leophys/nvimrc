@@ -2,8 +2,8 @@ local cmp = require('cmp')
 
 cmp.setup({
     completion = {
-        keyword_length = 0,
-        keyword_pattern = "*",
+        keyword_length = 1,
+        keyword_pattern = ".*",
     },
     snippet = function(args)
         vim.fn["vsnip#anonymous"](args.body)
@@ -20,10 +20,10 @@ cmp.setup({
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
-        { name = 'nvim_lsp', keyword_length = 0, keyword_pattern = ".*", },
+        { name = 'nvim_lsp', keyword_length = 0 },
         { name = 'vsnip',    keyword_length = 1 },
     }, {
-        { name = 'buffer', keyword_length = 0 },
+        { name = 'buffer', keyword_length = 3 },
         { name = 'path',   keyword_length = 0, keyword_pattern = "\\.?/", },
     }),
     view = { entries = "custom" },
