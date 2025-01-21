@@ -45,23 +45,29 @@ end
 
 -- Launch language servers
 local servers = {
-    'pyright',
-    'pylsp',
-    'gopls',
-    'rust_analyzer',
-    'tsserver',
-    'elixirls',
-    'dartls',
-    'clangd',
-    'zls',
+    { name = 'pyright' },
+    --{ name = 'pylsp' },
+    { name = 'gopls' },
+    { name = 'rust_analyzer' },
+    { name = 'ts_ls' },
+    { name = 'elixirls',     cmd = { '/usr/lib/elixir-ls/language_server.sh' } },
+    { name = 'dartls' },
+    { name = 'clangd' },
+    { name = 'zls' },
+    { name = 'lua_ls' },
 }
 for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
+    local server_config = {
         on_attach = on_attach,
         flags = {
             debounce_text_changes = 150,
         }
     }
+
+    for k, v in pairs(lsp) do
+        server_config[k] = v
+    end
+    nvim_lsp[lsp.name].setup(server_config)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
