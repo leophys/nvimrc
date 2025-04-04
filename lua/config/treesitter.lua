@@ -1,5 +1,7 @@
 local parser_install_dir = NVIM_HOMEDIR .. "/treesitter"
 vim.opt.runtimepath:prepend(parser_install_dir)
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 require('nvim-treesitter.configs').setup({
     autotag = {
@@ -25,6 +27,67 @@ require('nvim-treesitter.configs').setup({
     indent = {
         enable = true
     },
-    ensure_installed = "all",
+    -- ensure_installed = "all",
+    ensure_installed = {
+        -- programming languages
+        "go",
+        "python",
+        "rust",
+        "c",
+        "javascript",
+        "typescript",
+        "elixir",
+        "erlang",
+        "dart",
+        "zig",
+        "perl",
+        "php",
+        "ruby",
+        "lua",
+        "hare",
+        "kotlin",
+        "c_sharp",
+        "clojure",
+        "java",
+        "elm",
+        "nim",
+        "tsx",
+        "html",
+        "css",
+        "v",
+        "vala",
+        -- text
+        "vim",
+        "markdown_inline",
+        "typst",
+        "latex",
+        -- shell
+        "powershell",
+        "bash",
+        -- automation
+        "make",
+        "cmake",
+        "groovy",
+        "ninja",
+        -- config
+        "ini",
+        "json",
+        "yaml",
+        "toml",
+        "jsonnet",
+        "rasi",
+        "ssh_config",
+        "nginx",
+        "nix",
+        "sway",
+        -- cloud
+        "helm",
+        "jinja",
+        "proto",
+        "terraform",
+        -- varia
+        "llvm",
+        "jq",
+    },
     parser_install_dir = parser_install_dir,
 })
