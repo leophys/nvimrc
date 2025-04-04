@@ -42,6 +42,9 @@ local on_attach = function(client, bufrn)
 end
 
 
+-- cmp
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- Launch language servers
 local servers = {
@@ -62,6 +65,7 @@ for _, lsp in ipairs(servers) do
         flags = {
             debounce_text_changes = 150,
         }
+        capabilities = capabilities,
     }
 
     for k, v in pairs(lsp) do
