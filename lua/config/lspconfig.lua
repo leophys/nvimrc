@@ -32,8 +32,8 @@ local on_attach = function(client, bufrn)
     buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts, "LSP", "code_action",
         "Show code actions")
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts, "LSP", "references", "Show references")
-    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts, "LSP",
-        "show_line_diagnostics", "Show line diagnostic")
+    --buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts, "LSP",
+    --    "show_line_diagnostics", "Show line diagnostic")
     buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts, "LSP", "goto_prev", "Go to previous")
     buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts, "LSP", "goto_next", "Go to next")
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts, "LSP", "set_loclist",
@@ -73,9 +73,6 @@ for _, lsp in ipairs(servers) do
     end
     nvim_lsp[lsp.name].setup(server_config)
 end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- lsp_lines
 require('lsp_lines').setup()
