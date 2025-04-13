@@ -27,6 +27,7 @@ local options = {
     undolevels = 1000,
     undoreload = 100000,
     autoread = true,
+    foldlevel = 10,
 }
 
 for k, v in pairs(options) do
