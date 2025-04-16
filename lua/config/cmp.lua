@@ -43,11 +43,11 @@ cmp.setup({
         end, { 'i', 's' }),
     }),
     sources = cmp.config.sources({
-        -- { { name = 'nvim_lsp' }, { name = 'vsnip' } }, { { name = 'buffer' }, { name = 'path' } }
-        { name = 'nvim_lsp', score = 3 },
-        { name = 'vsnip',    score = 3 },
-        { name = 'buffer',   score = 1 },
-        { name = 'path',     score = 1, keyword_pattern = "\\.?/", },
+        { name = 'nvim_lsp' }, { name = 'vsnip' } }, { { name = 'buffer' }, { name = 'path' },
+        -- { name = 'nvim_lsp', score = 3 },
+        -- { name = 'vsnip',    score = 3 },
+        -- { name = 'buffer',   score = 1 },
+        -- { name = 'path',     score = 1, keyword_pattern = "\\.?/", },
     }),
     --view = { entries = "custom" },
 })
