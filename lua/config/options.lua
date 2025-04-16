@@ -5,10 +5,11 @@ local options = {
     number = true,
     showtabline = 2,
     cursorline = true,
-    autoindent = true,
     ttyfast = true,
     listchars = 'tab:› ,nbsp:␣,trail:•,extends:⟩,precedes:⟨',
     list = true,
+    autoindent = false,
+    smartindent = false,
     -- search-related
     showmatch = true,
     incsearch = true,
