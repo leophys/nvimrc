@@ -53,11 +53,12 @@ local servers = {
     { name = 'gopls' },
     { name = 'rust_analyzer' },
     { name = 'ts_ls' },
-    { name = 'elixirls',     cmd = { '/usr/lib/elixir-ls/language_server.sh' } },
+    { name = 'elixirls',              cmd = { '/usr/lib/elixir-ls/language_server.sh' } },
     { name = 'dartls' },
     { name = 'clangd' },
     { name = 'zls' },
     { name = 'lua_ls' },
+    { name = "kotlin_language_server" },
 }
 for _, lsp in ipairs(servers) do
     local server_config = {
