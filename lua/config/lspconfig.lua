@@ -2,6 +2,13 @@ local nvim_lsp = require('lspconfig')
 
 -- keybindings
 local on_attach = function(client, bufrn)
+    vim.lsp.completion.enable(true, client.id, bufrn, {
+        autotrigger = true,
+        convert = function(item)
+            return { abbr = item.label:gsub('%b()', '') }
+        end,
+    })
+
     Mapper = require("nvim-mapper")
     local function buf_set_keymap(...) Mapper.map_buf(bufrn, ...) end
 
@@ -43,8 +50,10 @@ end
 
 
 -- cmp
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- capabilities.textDocument.completion.dynamicRegistration = true
+-- capabilities.textDocument.inlineCompletion = { dynamicRegistration = true }
 
 -- Launch language servers
 local servers = {
@@ -67,7 +76,7 @@ for _, lsp in ipairs(servers) do
         flags = {
             debounce_text_changes = 150,
         },
-        capabilities = capabilities,
+        -- capabilities = capabilities,
     }
 
     for k, v in pairs(lsp) do
