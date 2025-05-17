@@ -59,6 +59,7 @@ local servers = {
     { name = 'zls' },
     { name = 'lua_ls' },
     { name = "kotlin_language_server" },
+    { name = 'tabby' },
 }
 for _, lsp in ipairs(servers) do
     local server_config = {
