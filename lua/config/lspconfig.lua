@@ -1,64 +1,65 @@
-local nvim_lsp = require('lspconfig')
+Mapper = require("nvim-mapper")
 
--- keybindings
-local on_attach = function(client, bufrn)
-    vim.lsp.completion.enable(true, client.id, bufrn, {
-        autotrigger = true,
-        convert = function(item)
-            return { abbr = item.label:gsub('%b()', '') }
-        end,
-    })
+local opts = { noremap = true, silent = true }
 
-    Mapper = require("nvim-mapper")
-    local function buf_set_keymap(...) Mapper.map_buf(bufrn, ...) end
+local function map_key(...) Mapper.map(...) end
+local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
+vim.cmd [[set completeopt+=menuone,noselect,popup]]
 
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufrn, ...) end
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('my.lsp', {}),
+    callback = function(args)
+        local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+        map_key('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts, "LSP", "declaration", "Go to declaration")
+        map_key('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts, "LSP", "definition", "Go to definition")
+        map_key('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts, "LSP", "hover", "Hover")
+        map_key('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts, "LSP", "implementation",
+            "Go to implementation")
+        map_key('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts, "LSP", "signature_help",
+            "Show signature help")
+        map_key('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts, "LSP",
+            "add_workspace_folder", "Add workspace folder")
+        map_key('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts, "LSP",
+            "remove_workspace_folder", "Remove workspace folder")
+        map_key('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts, "LSP"
+        , "list_workspace_folders", "List workspace folder")
+        map_key('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts, "LSP", "type_definition",
+            "Show type definition")
+        map_key('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts, "LSP", "rename", "Rename")
+        map_key('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts, "LSP", "code_action",
+            "Show code actions")
+        map_key('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts, "LSP", "references", "Show references")
+        --map_key('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts, "LSP",
+        --    "show_line_diagnostics", "Show line diagnostic")
+        map_key('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts, "LSP", "goto_prev", "Go to previous")
+        map_key('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts, "LSP", "goto_next", "Go to next")
+        map_key('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts, "LSP", "set_loclist",
+            "Set loclist")
+        map_key('n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts, "LSP", "formatting", "Format")
+        -- Auto-format ("lint") on save.
+        -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
+        if not client:supports_method('textDocument/willSaveWaitUntil')
+            and client:supports_method('textDocument/formatting') then
+            vim.api.nvim_create_autocmd('BufWritePre', {
+                group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
+                buffer = args.buf,
+                callback = function()
+                    vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+                end,
+            })
+        end
+        if client:supports_method('textDocument/completion') then
+            -- Optional: trigger autocompletion on EVERY keypress. May be slow!
+            client.server_capabilities.completionProvider.triggerCharacters = chars
+            vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+        end
+    end,
+})
 
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings
-    local opts = { noremap = true, silent = true }
-
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts, "LSP", "declaration", "Go to declaration")
-    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts, "LSP", "definition", "Go to definition")
-    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts, "LSP", "hover", "Hover")
-    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts, "LSP", "implementation",
-        "Go to implementation")
-    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts, "LSP", "signature_help",
-        "Show signature help")
-    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts, "LSP",
-        "add_workspace_folder", "Add workspace folder")
-    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts, "LSP",
-        "remove_workspace_folder", "Remove workspace folder")
-    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts, "LSP"
-    , "list_workspace_folders", "List workspace folder")
-    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts, "LSP", "type_definition",
-        "Show type definition")
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts, "LSP", "rename", "Rename")
-    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts, "LSP", "code_action",
-        "Show code actions")
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts, "LSP", "references", "Show references")
-    --buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts, "LSP",
-    --    "show_line_diagnostics", "Show line diagnostic")
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts, "LSP", "goto_prev", "Go to previous")
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts, "LSP", "goto_next", "Go to next")
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts, "LSP", "set_loclist",
-        "Set loclist")
-    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts, "LSP", "formatting", "Format")
-end
-
-
--- cmp
--- local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
--- capabilities.textDocument.completion.dynamicRegistration = true
--- capabilities.textDocument.inlineCompletion = { dynamicRegistration = true }
 
 -- Launch language servers
 local servers = {
     { name = 'pyright' },
-    --{ name = 'pylsp' },
     { name = 'gopls' },
     { name = 'rust_analyzer' },
     { name = 'ts_ls' },
@@ -68,21 +69,15 @@ local servers = {
     { name = 'zls' },
     { name = 'lua_ls' },
     { name = "kotlin_language_server" },
-    { name = 'tabby' },
 }
+
 for _, lsp in ipairs(servers) do
     local server_config = {
-        on_attach = on_attach,
-        flags = {
-            debounce_text_changes = 150,
-        },
-        -- capabilities = capabilities,
+        cmd = lsp.cmd,
     }
 
-    for k, v in pairs(lsp) do
-        server_config[k] = v
-    end
-    nvim_lsp[lsp.name].setup(server_config)
+    vim.lsp.enable(lsp.name)
+    vim.lsp.config(lsp.name, server_config)
 end
 
 -- lsp_lines
@@ -98,9 +93,5 @@ vim.keymap.set(
     require("lsp_lines").toggle,
     { desc = "Toggle lsp_lines" }
 )
-
-
--- Format on save
-vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
 
 return servers
