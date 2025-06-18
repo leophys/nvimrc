@@ -1,3 +1,3 @@
-local theme = require("themes.fluoromachine")
+local theme = require("themes.darcubox")
 
 return theme
