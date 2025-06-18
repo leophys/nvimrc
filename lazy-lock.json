@@ -1,7 +1,7 @@
 {
   "auto-pairs": { "branch": "master", "commit": "39f06b873a8449af8ff6a3eee716d3da14d63a76" },
   "blame.nvim": { "branch": "main", "commit": "b87b8c820e4cec06fbbd2f946b7b35c45906ee0c" },
-  "darcubox": { "branch": "main", "commit": "302751789f2e99f56df1f42260a92f3648ee15f2" },
+  "fluoromachine.nvim": { "branch": "main", "commit": "d638ea221b4c6636978f49c1987d10ff2733c23d" },
   "kotlin-vim": { "branch": "master", "commit": "53fe045906df8eeb07cb77b078fc93acda6c90b8" },
   "lsp_lines.nvim": { "branch": "main", "commit": "a92c755f182b89ea91bd8a6a2227208026f27b4d" },
   "lualine.nvim": { "branch": "master", "commit": "a94fc68960665e54408fe37dcf573193c4ce82c9" },
